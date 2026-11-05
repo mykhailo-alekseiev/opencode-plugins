@@ -1,6 +1,7 @@
 import { Plugin } from "@opencode/plugin/tui";
 import { formatDuration } from "./duration";
 import { MonitorRpc, readMonitors, readStopped, type MonitorSummary } from "./rpc";
+import { registerMonitorSidebar } from "./sidebar";
 
 export const STOP_BINDING = "ctrl+k";
 
@@ -18,12 +19,12 @@ export default Plugin.define({
       return family.includes(sessionID) ? family : [sessionID, ...family];
     };
 
-    const list = async (sessionID: string): Promise<MonitorSummary[] | undefined> => {
+    const list = async (sessionID: string, quiet = false): Promise<MonitorSummary[] | undefined> => {
       try {
         const result = await context.client.rpc(MonitorRpc).list({ sessionIDs: familyOf(sessionID) }, { location: locationOf(sessionID) });
         return readMonitors(result);
       } catch (error) {
-        context.ui.toast.show({ variant: "error", message: `Could not list monitors: ${errorMessage(error)}` });
+        if (!quiet) context.ui.toast.show({ variant: "error", message: `Could not list monitors: ${errorMessage(error)}` });
         return undefined;
       }
     };
@@ -77,6 +78,8 @@ export default Plugin.define({
       if (monitor) await context.ui.dialog.alert({ title: `${monitor.id} · ${monitor.description}`, message: monitor.command });
     };
 
+    const unregisterSidebar = registerMonitorSidebar(context, (sessionID) => list(sessionID, true), show);
+
     context.keymap.layer(() => ({
       mode: "global",
       commands: [
@@ -98,5 +101,6 @@ export default Plugin.define({
         },
       ],
     }));
+    return unregisterSidebar;
   },
 });

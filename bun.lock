@@ -21,6 +21,11 @@
       "devDependencies": {
         "@tsconfig/bun": "1.0.9",
       },
+      "peerDependencies": {
+        "@opentui/core": ">=0.6.6",
+        "@opentui/solid": ">=0.6.6",
+        "solid-js": ">=1.9.0",
+      },
     },
     "packages/pr-tracker": {
       "name": "@kitlangton/opencode-pr-tracker",

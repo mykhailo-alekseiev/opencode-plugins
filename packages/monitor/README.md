@@ -18,13 +18,14 @@ Add the package directory to `opencode.jsonc`:
 }
 ```
 
-One entry loads the server tools, the TUI command, and the RPC part they share. Requires an OpenCode V2 release with `@opencode/plugin` 2.1.
+One entry loads the server tools, the TUI sidebar and command, and the RPC part they share. Requires an OpenCode V2 release with `@opencode/plugin` 2.1.
 
 ## Use
 
 - **`monitor`** starts `command` with `$SHELL -c` in the session directory and returns a `taskId`. `timeout_ms` defaults to 5 minutes and is capped at 24 hours.
 - **`monitor_stop`** stops a monitor by `taskId` without a notice.
 - **`/monitors`** or **Monitors** in the command palette (`ctrl+p`) lists the session's running monitors; `ctrl+k` stops the selected one.
+- **Sidebar → Monitors** shows active monitors for the session and its subagents, with their descriptions, elapsed time, and time remaining until timeout. It refreshes every 2 seconds and hides when none are running. Click the section or a monitor to open `/monitors` for command details and stopping. This is runtime information, not an estimated completion percentage. Refresh failures are shown inline without repeated error toasts.
 
 Each stdout line is one event. Lines that arrive close together become one notice: after 1 second of quiet, or 5 seconds after the first line. While the session is working, notices wait until the turn ends. Notices are capped at 16 KB and keep the newest lines.
 

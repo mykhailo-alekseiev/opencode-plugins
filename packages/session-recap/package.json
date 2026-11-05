@@ -19,7 +19,8 @@
     "recap"
   ],
   "exports": {
-    ".": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./tui": "./dist/index.js"
   },
   "files": [
     "dist",
@@ -37,11 +38,11 @@
   },
   "dependencies": {
     "@opencode-ai/plugin": "0.0.0-next-17271",
-    "@opentui/core": "0.0.0-20260808-9ecf7c0a",
+    "@opentui/core": "0.6.6",
     "solid-js": "1.9.14"
   },
   "devDependencies": {
     "@tsconfig/bun": "1.0.9",
-    "@opentui/solid": "0.5.1"
+    "@opentui/solid": "0.6.6"
   }
 }

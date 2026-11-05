@@ -31,6 +31,21 @@ Shows a one-sentence recap of your session above the composer, so you can rememb
 }
 ```
 
+### [`@mykhailo-alekseiev/opencode-monitor`](./packages/monitor)
+
+Runs a shell command in the background and wakes the session with each line it prints, like Claude Code's `Monitor` tool.
+
+- The agent starts one with the `monitor` tool to babysit a pull request, watch CI, or wait for a build.
+- `/monitors` lists the session's running monitors and stops them.
+- Unpublished: load it from a local checkout.
+
+```jsonc
+// opencode.jsonc
+{
+  "plugins": ["/path/to/opencode-plugins/packages/monitor"],
+}
+```
+
 ## Release
 
 Add a changeset, push to `main`, then merge the release PR that CI opens:
